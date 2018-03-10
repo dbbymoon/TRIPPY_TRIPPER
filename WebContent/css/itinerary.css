@@ -1,0 +1,350 @@
+
+
+
+
+
+*{box-sizing: border-box;}
+
+/* Style inputs */
+
+/* stopImg */
+.stopImg{
+	width:27px;
+	height:27px;
+}
+
+.detailTr{
+	height:30px;
+	font-size:13px;
+	background:rgba(255,255,245,0.9);
+}
+
+.detailTr td{
+	padding:0px;
+}
+
+#wholeDistance{
+	font-size: 15px;
+}
+
+/* 버튼  */
+.btn-itinerary{
+	background-color: white;
+	padding: 12px 20px;
+    cursor: pointer;
+    border:none;
+    width:14%;
+}
+
+.btn-itinerary:hover{
+	background-color: #05e4bd;
+    color:white;
+	font-weight:bold;
+	font-size:17px;
+}
+
+#addTransportBtn{
+	background-color: white;
+    padding: 5px;
+    width: 20%;
+    margin: 5px;
+    margin-left: 75%;
+}
+
+/* 모달 창의 input-text */
+.modText{
+	width:90%;
+	margin:7px;
+	padding:0;
+}
+
+/*모달창의 버튼*/
+.modal_btn{
+	margin-top: -20px;
+}
+
+
+/* Style the container/contact section */
+/* 스크롤 디자인 */
+::-webkit-scrollbar {width: 8px; height: 8px; border: 3px solid #ffffff; }
+::-webkit-scrollbar-button:start:decrement,::-webkit-scrollbar-button:end:increment{display:block;height:10px;background:#efefef}
+::-webkit-scrollbar-track{background:#efefef;-webkit-border-radius:10px;border-radius:10px;-webkit-box-shadow:inset 0 0 4px rgba(0,0,0,.2)}
+::-webkit-scrollbar-thumb{height:50px;width:50px;background:rgba(0,0,.2);-webkit-border-radius:8px;border-radius:8px;-webkit-box-shadow:inset 0 0 4px rgba(0,0,0.1)}
+
+.container{
+	width:100%;
+	padding : 30px;
+	height:800px;
+/* 	margin-top:20px; */
+}
+
+/* 스케줄과 해당 날짜가 있는 영역 */
+.container1{
+	width:25%;
+	clear: both;
+	float:left;
+	height:750px;
+	background-color:rgba( 0, 0, 0, 0.5);
+}
+	
+	/* 1. 전날, 다음날, 해당 여행 날짜가 담겨있는 영역*/
+	.scheduleDate{
+		width:100%;
+		clear: both;
+		float:left;
+		height:150px;
+	}
+		/* 1.1. 전날, 다음날 버튼 */
+		.goDate{
+			background:none;
+			border:none;
+			color : white;
+			font-size: 3.8em;
+			padding:5px;
+			margin-top:20px;
+		}
+		/* 1.2. 여행 날짜 */
+		#tourDate{
+			float:left;
+			width:210px;
+			color:white;
+			font-size:4em;
+			margin-top:24px;
+			margin-right:0px;
+			margin-left:42px;
+		}
+	
+
+	
+	/* 2. 일정들이 담겨있는 영역 */
+	#scheduleBox{
+		width:100%;
+		height:590px;
+		overflow: auto;
+		cursor: pointer;
+		background-color: rgba( 100, 100, 100, 0.6);
+	}
+/* 		2.1. tour 일정 */
+		.tour{
+			width:95%;
+			margin-top:10px;
+			height:120px;
+			background-color: rgba(240,240,240, 0.6);
+		}
+		.tourTable{
+			color: white;
+			width:70%;
+		}
+		.tourTable td{
+			color: white;
+			padding-top : 8px;
+			font-size:15px;
+		}
+		.tourTable td a{
+			color : #0b4237;
+			font-weight:bold;
+			font-size:17px;
+		}
+		.scheduleBtn{
+			float:right;
+			background:none;
+			border:none;
+			margin-top:5px;
+		}
+		
+/* 		2.2. transport 일정 */
+		.transport{
+			width:95%;
+			padding-top:7px;
+			margin-top:10px;
+			height:60px;
+			background-color: rgba(30,30,30, 0.8);
+		}
+		.transportTable td button{
+			margin:10px;
+		}
+
+
+
+/* Create two columns that float next to eachother */
+	.column {
+	    float: left;
+	    width: 65%;
+	    margin-top: 6px;
+		padding: 5px;
+	}
+	/* Clear floats after the columns */
+	.row:after {
+	    content: "";
+	    display: table;
+	    clear: both;
+	}
+	/* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
+	@media (max-width: 600px) {
+	    .column {
+	        width: 100%;
+	        margin-top: 0;
+	    }
+	}
+	.placeIcon {
+		width: 40px;
+		height: 40px;
+		margin: 10px;
+	}
+	
+/* 구글 지도  영역  */
+.container2{
+	width:70%;
+    margin-right:50px;
+    margin-top:-15px;
+    float:right;
+    height:750px;
+}
+	/* 검색 결과*/
+	#listing{
+		float: left;height:550px;overflow: auto;cursor: pointer;width:100%;
+	}
+	#results{
+		border-collapse: collapse;width:100%;
+		
+	}
+	#results tr{
+		border-bottom: 2px solid gray;
+		color:black;
+	}
+
+	/* 지도 */
+	.map-canvas{
+		width:100%;height:700px;
+		position:absolute;
+	}
+.field_map{
+	position:absolute;
+	width:45%;left:800px;
+	top:900px;
+}
+/* 지도 내의 검색 input */
+.input_map {
+    width: 40%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    margin-top: 6px;
+    margin-bottom: 16px;
+    margin-left:5px;
+    resize: vertical;
+    height:50px;
+    background-color: rgba( 250, 250, 250, 0.8 );
+}
+.searchBtn {
+	background-color: white;
+	padding: 12px 20px;
+    cursor: pointer;
+    width:14%;
+    height:50px;
+    border:none;
+    color:black;
+    font-weight:bold;
+}
+
+.searchBtn:hover {
+	background-color: #05e4bd;
+    border:3px solid white;
+    color:white;
+    line-height: 3px;
+    font-size:18px;
+}
+
+/*검색 타입*/
+#searchType{
+	margin-left:8px;
+}
+
+/*itineraryMod에서 travle Name*/
+#scheduleName{
+	margin-left:8px;
+}
+
+
+/*출발날짜*/
+#departureDate, #endDate{
+	padding-top:13px;
+	margin-left:10px;
+	font-size:18px;
+	color:#333333;
+}
+
+/* 여행 이름, 출발일, 종료일, place 버튼, 길찾기 버튼 */
+.schedule_detail{
+	color : white;
+	font-size: 1.5em;
+	padding-top:10px;
+}
+.placeOrNavi{
+	background:none;
+	border:none;
+	height:60px;
+	padding-left:15px;
+	padding-right:15px;
+}
+
+.schedule_container{
+	float: left; 
+	width: 88%;
+}
+
+/* 모달창 */
+
+.modal{
+	width: 300px;
+    background-color: white;
+    position: absolute;
+    top: 130%;
+    left: 55%;
+    margin-left: -230px;
+    margin-top: 40px;
+    height: 250px;
+    padding: 10px;
+
+}
+
+
+#naviResult tr,#naviResult td{
+   padding : 15px;
+}
+
+.transitDetailBtn{
+	background: none;
+	border: none;
+	color:white;
+}
+
+#naviBox{
+	margin-top: -15px; 
+	height: 550px; 
+	overflow: auto; 
+	cursor: pointer;
+	background:rgba(235,235,235,0.8);
+}
+
+#naviResult{
+	width:311px;
+}
+
+.trasitDetailTitle{
+	text-align:center;
+	font-size:18px;
+	color:black;
+	font-weight:bold;
+	height:50px;
+}
+
+.trasitDetailContent{
+	font-size:14px;
+}
+
+.trasitDetailPlace{
+	color:black;
+	font-size:16px;
+	font-weigth:bold;
+}
+

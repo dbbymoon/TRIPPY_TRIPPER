@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.CReplyDao">
+	<!-- insert, update, delete, selectAll, selectOne, getCount -->
+
+	<!-- 댓글 추가 (대댓글X)-->
+	<insert id="insertReply" parameterType="creply">
+		insert
+		  into creply
+		 values (creply_seq.nextval, creplynum.nextval, #{depth},#{companionSeq}, #{memberId}, #{replyContent}, #{memberProfile},#{secret})
+	</insert>
+	
+	<!-- 대댓글 추가 -->
+	<insert id="insertReplyOfReply" parameterType="creply">
+		insert
+		  into creply
+		 values (creply_seq.nextval, #{cReplyNum}, #{depth}, #{companionSeq}, #{memberId}, #{replyContent}, #{memberProfile},#{secret})
+	</insert>
+	
+	<!-- 특정 게시글의 댓글의 대댓글 개수 조회 -->
+	<select id="getReplyCount" parameterType="int" resultType="int">
+		select count(*)
+		  from creply
+		 where creplynum=#{cReplyNum} 
+	</select>
+	
+	<!-- 댓글 수정 -->
+	<update id="updateReply" parameterType="creply">
+		update creply
+		   set replyContent = #{replyContent}
+		 where cReplySeq = #{cReplySeq}
+	</update>
+	
+	<!-- 대댓글이 달린 댓글을 삭제하려고 할 때 삭제하지 않고 content와 memberId를 변경 -->
+	<update id="updateReplyoWithRepOfRep" parameterType="creply">
+		update creply
+		   set replyContent = #{replyContent}, memberId=#{memberId}
+		 where cReplySeq = #{cReplySeq}
+	</update>
+	
+	<!-- 댓글 삭제 -->
+	<delete id="deleteReply" parameterType="int">
+		delete
+		  from creply
+		 where cReplySeq = #{cReplySeq}
+	</delete>
+	
+	<!-- 여행글이 삭제됬을 떄 댓글도 삭제 -->
+	<delete id="deleteReplyByRecordSeq" parameterType="int">
+		delete
+		  from creply
+		 where companionSeq = #{companionSeq}
+	</delete>
+	
+	<!-- 같은 replyNum을 가진 모든 댓글 삭제 -->
+	<delete id="deleteAllReplyforReplyNum" parameterType="int">
+		delete
+		  from creply
+		 where cReplyNum = #{cReplyNum}
+	</delete>
+	
+	<!-- 특정 게시글의 댓글 조회 -->
+	<select id="selectOneReply" parameterType="int" resultType="creply">
+		select * 
+		  from creply 
+		 where cReplySeq =#{cReplySeq}
+	</select>
+		
+	<!-- 특정 게시물의 모든 댓글 조회 -->
+	<select id="selectAllReply" parameterType="int" resultType="creply">
+		select *
+		  from creply
+		 where companionSeq=#{companionSeq}
+		order by cReplyNum, depth
+	</select>
+	
+	<!-- 비밀댓글 여부 바꾸기 -->
+	<update id="updateReplyForSecret" parameterType="creply">
+		update creply
+		   set secret = #{secret}
+		 where cReplySeq = #{cReplySeq}
+	</update>
+	
+	<!-- myPage에서 프로필 사진이 수정될 때 companion 게시판의 프로필 사진도 수정되어야함 -->
+	<update id="updateReplyForProfile" parameterType="creply">
+   	  update creply
+   	     set memberProfile = #{memberProfile}
+       where memberId = #{memberId}
+   </update>
+</mapper>

@@ -1,0 +1,214 @@
+@font-face {
+	font-family: 'icomoon';
+	src: url("../fonts/icomoon/icomoon.eot?srf3rx");
+	src: url("../fonts/icomoon/icomoon.eot?srf3rx#iefix")
+		format("embedded-opentype"),
+		url("../fonts/icomoon/icomoon.ttf?srf3rx") format("truetype"),
+		url("../fonts/icomoon/icomoon.woff?srf3rx") format("woff"),
+		url("../fonts/icomoon/icomoon.svg?srf3rx#icomoon") format("svg");
+	font-weight: normal;
+	font-style: normal;
+}
+
+/* tripRecord - modal */
+
+#viewIntroSec {
+    width: 200px;
+    float: right;
+    line-height: 22px;
+    margin-right: 24px;
+	margin-top: 12px;
+}
+
+.viewMemberProNId {
+	padding-bottom: 20px;
+	color: #07a38b;
+}
+
+#viewMemberId {
+    padding-left: 20px;
+    font-weight: bold;
+}
+
+#modInfoViewCloseBtn {
+	font-size: 12px;
+	background: white;
+	font-weight: bold;
+    border: none;
+    float: right;
+    height: 20px;
+    width: 20px;
+}
+
+.viewMemberContent {
+	line-height: 45px;
+}
+
+.viewLine {
+	height: 5px;
+    width: 350px;
+    background: #09C6AB;
+}
+
+#modInfoView {
+    width: 350px;
+    height: 420px;
+    background: white;
+    position: fixed;
+    top: 25%;
+    left: 39%;
+    z-index: 1000;
+    color: black;
+    box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.4);
+}
+
+#modInfoView ul {
+	list-style: none;
+	margin-top: 40px;
+}
+
+#modInfoView li {
+    margin-left: -30px;
+    padding-left: 25px;
+    font-size: 13px;
+}
+
+#modMenu {
+	width: 100px;
+    height: 70px;
+    background: rgba(0,0,0,0.8);
+    color: white;
+    position: fixed;
+    top: 43%;
+    left: 45%;
+    z-index: 1000;
+    color: black;
+    box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.4);
+}
+
+#viewProfileBtn, #viewProfileBtn2 {
+	border-bottom: 1px solid white;
+}
+
+#viewProfileBtn, #viewProfileBtn2, #viewDiaryBtn, #viewDiaryBtn2 {
+	height: 35px;
+    color: white;
+    font-size: 14px;
+    text-align: center;
+    padding-top: 5px;
+}
+
+
+/* tripRecordList */
+
+#tripRecordMemberId:hover{
+	cursor: pointer;
+}
+
+#modMenu:hover{
+	cursor: pointer;
+}
+
+.viewTripRecordImg {
+    margin-left: -10px;	
+}
+
+.tripRecordImgDetail {
+    width: 500px;
+    height: 500px;
+    margin-left: -40px;
+    margin-top: -110px;
+    margin-bottom: -10px;
+}
+
+.viewTripRecord-memo {
+	margin-top: 13px;
+    margin-left: 15px;
+    float: left;
+    font-size: 13px;
+    width: 300px;
+}
+
+#tripRecordMemberId {
+	font-weight: bold;
+	font-size: 16px;
+	padding-left: 30px;
+	color: #286460;
+}
+
+.profileImgTripRecord {
+    margin-left: 20px;
+    margin-top: 10px;
+    margin-bottom: 19px;
+    margin-right: -10px;
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+}
+
+.viewTripRecord {
+	text-align: left;	
+}
+
+.viewTripRecord-content p {
+    font-size: 13px;
+    margin: -0.3px;
+    margin-top: 12px;
+    margin-left: -20px;
+}
+
+.viewCompanion-content #companionId{
+	margin-top:20px;
+	margin-bottom:10px;
+	font-size:22px;
+	
+}
+
+#viewReplyTable td {
+	border :none;
+	color:black;
+}
+
+
+
+.replyProfile{
+	width : 30px;
+	height : 30px;
+	border-radius: 50%;
+}
+
+.replytableMemberProfile{
+	width:50px;
+	height:37px;
+	text-align:center;
+}
+
+.replytableMemberProfileRoR{
+	width:50px;
+	height:37px;
+	text-align:right;
+}
+
+.replytableId{
+	font-weight:bold;
+	padding-left:8px;
+}
+
+.replytableContent{
+	width:150px;
+	font-size:12px;
+	padding-left:10px;
+}
+
+.replytableDate{
+	color:#d8d8d8;
+	font-size:8px;
+}
+
+.replyBtn{
+ 	background:none;
+ 	border:none;
+ 	font-size:10px;
+}
+
+/*tripRecordList*/

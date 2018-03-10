@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="dao.CompanionDao">
+
+	<!-- Companion : 동행 게시글 추가 -->
+	<insert id="insertCompanion" parameterType="companion">
+		<selectKey order="BEFORE" keyProperty="companionSeq" resultType="int">
+			select companion_seq.nextval from dual
+		</selectKey>
+		insert
+		into companion 		
+		values (
+				#{companionSeq},
+				#{memberId},
+				#{departure},
+				#{destination},
+				#{detailSpot},
+				#{vehicles},
+				#{companionMemo},
+				#{tourDate},
+				#{companionNum},
+				#{companionGender},
+				1,
+				#{memberProfile}
+				)
+	</insert>
+
+	<!-- Companion : 동행 게시글 수정 -->	
+	<update id="updateCompanion" parameterType="companion">
+		update companion
+		set departure = #{departure},
+			destination = #{destination},
+			detailSpot = #{detailSpot},
+			vehicles = #{vehicles},
+			companionMemo = #{companionMemo},
+			tourDate = #{tourDate},
+			companionNum = #{companionNum},
+			companionGender = #{companionGender}
+		where companionSeq = #{companionSeq}
+	</update>
+
+	<!-- Companion : 동행 게시글 삭제/글번호 -->	
+	<delete id="deleteCompanion" parameterType="int">
+		delete
+		from companion
+		where companionSeq = #{companionSeq}
+	</delete>
+	
+	<!-- Companion : 동행 게시글 삭제/아이디 -->	
+	<delete id="deleteCompanionById" parameterType="String">
+		delete
+		from companion
+		where memberId = #{memberId}
+	</delete>
+
+	<!-- Companion : 동행 게시글 하나 조회 -->	
+	<select id="selectOneCompanion" parameterType="int" resultType="companion">
+		select *
+		from companion
+		where companionSeq = #{companionSeq} 
+	</select>
+	
+	<!-- Companion : 동행 게시글 모두 조회 또는 검색으로 조회하기 -->	
+	<select id="selectAllCompanion" parameterType="map" resultType="companion">
+		select * 
+		from companion
+		where 1=0
+			<if test="type==0">
+				or 1=1
+			</if>
+			<if test="departure != null">
+				or departure like '%${departure}%'
+			</if>
+			<if test="destination != null">
+				or destination like '%${destination}%'
+			</if>
+			<if test="memberId != null">
+				or memberId like '%${memberId}%'
+			</if>
+		order by companionSeq desc
+	</select>
+	
+	<!-- Companion : 동행 게시글 개수 조회 -->
+	<select id="getCount">
+		select count(*)
+		  from companion
+	</select>
+	
+	<!-- 해당글에 매칭된 동행인의 수를 카운트 -->
+	<update id="updateCountMaching" parameterType="int">
+		update companion
+		set companionDeterminNum = #{companionDeterminNum}
+		where companionSeq = #{companionSeq}
+	</update>
+	
+	<!-- myPage에서 프로필 사진이 수정될 때 companion 게시판의 프로필 사진도 수정되어야함 -->
+	<update id="updateCompanionForProfile" parameterType="Companion">
+   	  update companion
+   	     set memberProfile = #{memberProfile}
+       where memberId = #{memberId}
+   </update>
+	
+</mapper>

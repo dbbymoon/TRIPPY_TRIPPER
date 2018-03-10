@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="dao.MatchingDao">
+
+	<!-- Matching : 매칭 추가 -->
+	<insert id="insertMatching" parameterType="matching">
+		insert
+		into matching
+		values (#{companionSeq},#{memberId},<include refid="matchingType"/>)
+	</insert>
+
+	<!-- Matching : 매칭 수정 -->
+	<update id="updateMatching" parameterType="matching">
+		update matching
+		set matchingType = #{matchingType}
+		where companionSeq = #{companionSeq} and memberId = #{memberId}
+	</update>
+
+	<!-- Matching : 매칭 삭제/글 번호로 삭제-->
+	<delete id="deleteMatching" parameterType="int">
+		delete
+		from matching
+		where companionSeq = #{companionSeq}
+	</delete>
+	
+	<!-- Matching : 매칭 삭제/아이디로 삭제 -->
+	<delete id="deleteMatchingById" parameterType="String">
+		delete
+		from matching
+		where memberId = #{memberId}
+	</delete>
+	
+	<!-- Matching : 매칭 삭제/아이디+글번호로 삭제 -->
+	<delete id="deleteMatchingByIdAndSeq" parameterType="matching">
+		delete
+		from matching
+		where memberId = #{memberId} and companionSeq = #{companionSeq}
+	</delete>
+	
+	<!-- Matching : 매칭  조회 / 글 번호로만 조회 -->
+	<select id="selectAllMatchingBySeq" parameterType="int" resultType="matching">
+		select *
+		from matching
+		where companionSeq = #{companionSeq}  
+		order by matchingtype desc
+	</select>
+	
+	<!-- Matching : 매칭 하나 조회 / 글 번호와 아이디로 조회 -->
+	<select id="selectOneByIdAndSeq" parameterType="matching" resultType="matching">
+		select *
+		from matching
+		where companionSeq = #{companionSeq} and memberId = #{memberId}
+	</select>
+	
+	<!-- Matching : 매칭 하나 조회 / 아이디로 조회 -->
+	<select id="selectOneById" parameterType="String" resultType="matching">
+		select *
+		from matching
+		where memberId = #{memberId}
+	</select>
+	
+	<!-- Matching : 매칭 하나 조회 / 아이디와 매칭 타입으로 조회-->
+	<select id="selectByIdAndType" parameterType="matching" resultType="matching">
+		select *
+		from matching
+		where memberId = #{memberId} and matchingType=#{matchingType}
+	</select>
+	
+	<!-- Matching : 매칭 모두 조회 -->
+	<select id="selectAllMatching" resultType="matching">
+		select *
+		from matching
+	</select>
+	
+	<!-- Matching : 해당 글에 매칭된 사람의 수 출력 -->
+	<select id="countMatching" parameterType="matching" resultType="int">
+		select count(*) from matching where companionSeq = #{companionSeq} and matchingtype = '2'
+	</select>
+
+
+	<sql id="matchingType">
+      <choose>
+         <when test="matchingType == null">
+            '1'
+         </when>
+         <otherwise>
+            #{matchingType}
+         </otherwise>
+      </choose>
+   </sql>
+
+</mapper>

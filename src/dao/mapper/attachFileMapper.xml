@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.AttachFileDao">
+	<!-- insert, update, delete, selectOne, selectAll -->
+	
+	<!-- 삽입 -->
+	<insert id="insertAttachFile" parameterType="map">
+		insert
+		  into attachfile (fileNum, recordSeq, fileName)
+		 values (attachfile_seq.nextVal, #{recordSeq}, #{fileName}) 
+	</insert>
+	
+	<!-- 수정 -->
+	<update id="updateAttachFile" parameterType="attachfile">
+		update attachfile
+		   set filename=#{fileName}
+		 where filenum=#{fileNum}  
+	</update>
+	
+	<!-- 삭제 -->
+	<delete id="deleteAttachFile" parameterType="int">
+		delete 
+		from attachfile
+		where filenum = #{fileNum}
+	</delete>
+	
+	<!-- 특정 사진 선택 -->
+	<select id="selectOneAttachfile" parameterType="int" resultType="attachfile">
+		select *
+		  from attachfile
+		 where filenum=#{fileNum}
+	</select>
+	
+	<!-- 파일 번호 하나 받아오기 -->
+	<select id="selectAttachfileNum" parameterType="int" resultType="attachfile">
+		select fileNum
+		  from attachfile
+		 where recordSeq = #{recordSeq}
+	</select>
+	
+	<!-- 특정 게시물의 모든 사진 선택 -->
+	<select id="selectAllAttachFiles" parameterType="int" resultType="attachfile">
+		select *
+		  from attachfile
+		 where recordseq=#{recordSeq}
+		 order by fileNum
+	</select>
+	
+	<!-- 내 다이어리에 있는 모든 사진 불러오기 -->
+	<select id="selectAllMyAttachFiles" parameterType="String" resultType="attachfile">
+		select *
+		from attachfile a 
+			join triprecord t
+			on a.recordseq = t.recordseq
+			where memberId = #{memberId}
+			order by a.recordseq desc
+	</select>	
+	
+
+	
+	
+	
+	
+	
+	<!-- 모든 사진  불러오기 (secret X)-->
+	<select id="allAttachFiles" resultType="attachfile">
+		select *
+		  from attachfile
+	</select>
+</mapper>

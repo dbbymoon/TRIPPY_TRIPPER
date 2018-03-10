@@ -1,0 +1,33 @@
+.btn-itinerary{
+	background-color: white;
+	padding : 5px 15px;
+	margin : 5px;
+    cursor: pointer;
+	height:40px;
+	width:70px; 
+	text-align:center;
+}
+/* 모달창 */
+.itineraryMod{
+	width: 300px;
+	heigth : 100px;
+	background-color:rgba( 50, 50, 50, 0.6);
+	position: absolute;
+	top: 340px;
+	left: 640px;
+	padding: 20px;
+	z-index: 1000;
+	color:black;	
+}
+#mySchedules{
+	width : 80%;
+	align-self: center;
+    padding: 12px;
+    border: 1px solid #ccc;
+    margin-top: 6px;
+    margin-bottom: 16px;
+    margin-left:5px;
+    resize: vertical;
+    height:50px;
+    background-color: rgba( 250, 250, 250, 0.9 );
+}

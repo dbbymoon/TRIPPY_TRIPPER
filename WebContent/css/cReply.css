@@ -1,0 +1,127 @@
+/* 시작  replyModContainer*/
+.replyModContainer{
+	width:400px;
+	height:400px;
+	background:white;
+	border: 1px solid black;
+	position: fixed;
+    top: 20%;
+    left: 38%;
+    z-index: 1000;
+}
+
+/* 끝 replyModContainer*/
+
+.replyModContainerTopLine{
+	width:399px;
+	height:10px;
+	background:black;
+	border:none;
+}
+
+.replyContent{
+	width:390px;
+	height:380px;
+	margin:4px;
+	border:1px solid white;;
+}
+
+.viewReply{
+/* 	border: 1px solid black; */
+	height:330px;
+	width:380px;
+	margin:4px;
+/* 	margin-top:-50px; */
+	position:absolute;
+	overflow:auto;
+}
+
+#writeReply{
+/* 	border:1px solid blue; */
+	width:380px;
+	height:39px;
+	margin:4px;
+	margin-top:340px;
+	padding:3px;
+}
+
+#addReplyBtn, #closeReplyBtn {
+    border: none;
+    background: black;
+    color: white;
+    font-size: 13px;
+    position: relative;
+    bottom: 11px;
+    margin-left: 3px;
+}
+
+#reContent {
+	width: 260px;
+	height: 30px;
+/* 	margin-left: 10px; */
+	font-size: 14px;
+	border: 2px solid #dadada;
+    border-radius: 7px;
+    float:bottom;
+}
+
+#reContent:focus { 
+    outline: none;
+    border-color: #9ecaed;
+    box-shadow: 0 0 10px #9ecaed;
+}
+
+#viewReplyTable td{
+	border :none;
+	color:black;
+}
+
+.replyProfile{
+	width : 30px;
+	height : 30px;
+	border-radius: 50%;
+}
+
+.replytableMemberProfile{
+	width:50px;
+	height:37px;
+	text-align:center;
+}
+
+.replytableMemberProfileRoR{
+	width:50px;
+	height:37px;
+	text-align:right;
+}
+
+.replytableId{
+	font-weight:bold;
+	padding-left:4px;
+	font-size:13px;
+}
+
+.replytableContent{
+	width:240px;
+	font-size:14px;
+	padding-left:10px;
+}
+
+
+.replytableDate{
+	color:#d8d8d8;
+	font-size:8px;
+}
+
+.replyBtn{
+ 	background:none;
+ 	border:none;
+ 	font-size:10px;
+}
+
+/*padlock*/
+.padlock{
+	width:17px;
+	height:17px;
+	margin-top:-15px;
+	margin-left:4px;
+}

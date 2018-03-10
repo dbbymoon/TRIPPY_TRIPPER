@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="dao.ItineraryDao">
+
+   <!-- BASIC : 여행 계획 추가 -->
+   <insert id="insertItinerary" parameterType="itinerary">
+      insert
+      into itinerary
+      values (
+            itinerary_seq.nextVal, #{memberId}, #{tourDate},
+            #{tourSpot}, #{tourMemo}, #{vehicles},
+            #{departureTime}, #{arrivalTime}, #{itineraryType}
+            )
+   </insert>
+   <!-- BASE 추가 -->
+   <insert id="insertBase" parameterType="map">
+         insert
+         into itinerary
+            (itinerarySeq,memberId,tourName,departureDate,endDate,tourDate,itineraryType)
+         values (
+            itinerary_seq.nextVal, #{memberId},#{tourName},#{departureDate},#{endDate},#{tourDate},#{itineraryType}
+         )
+   </insert>
+      <!-- TOUR 일정 추가 -->
+   <insert id="insertTour" parameterType="map">
+   <selectKey order="BEFORE" keyProperty="itinerarySeq" resultType="int">
+         select itinerary_seq.nextval from dual
+     </selectKey>
+      insert
+      into itinerary
+      (itinerarySeq,memberId,tourName,departureDate,endDate,tourDate,tourSpot,spotLink,tourMemo,itineraryType)
+      values (
+            #{itinerarySeq}, #{memberId}, #{tourName},#{departureDate},#{endDate}, #{tourDate},
+            #{tourSpot},#{spotLink}, #{tourMemo}, #{itineraryType}
+            )
+   </insert>
+   
+   <!-- TRANSPORT 일정 추가 (TRANSPORTATION = 'TRANSIT') -->
+   <insert id="insertTransit" parameterType="map">
+    <selectKey order="BEFORE" keyProperty="itinerarySeq" resultType="int">
+         select itinerary_seq.nextval from dual
+      </selectKey>
+      insert
+      into itinerary
+      (itinerarySeq,memberId,tourName,departureDate,endDate,tourDate,distance,duration,departure,destination,transportation,itineraryType)
+      values (
+            #{itinerarySeq}, #{memberId}, #{tourName},#{departureDate},#{endDate}, #{tourDate},
+            #{distance},#{duration}, #{departure},#{destination},#{transportation}, #{itineraryType}
+            )
+   </insert>
+   
+   <!-- TRANSPORT 일정 추가 (TRANSPORTATION = 'WALK' or 'DRIVE') -->
+   <insert id="insertWalkOrDrive" parameterType="map">
+   <selectKey order="BEFORE" keyProperty="itinerarySeq" resultType="int">
+         select itinerary_seq.nextval from dual
+     </selectKey>
+      insert
+      into itinerary
+      (itinerarySeq,memberId,tourName,departureDate,endDate,tourDate,departure,destination,transportation,itineraryType)
+      values (
+            #{itinerarySeq}, #{memberId}, #{tourName},#{departureDate},#{endDate}, #{tourDate},
+            #{departure},#{destination},#{transportation}, #{itineraryType}
+            )
+   </insert>
+
+   <!-- BASIC : 여행 계획 수정 -->
+   <update id="updateItinerary" parameterType="itinerary">
+      update itinerary
+      set tourDate = #{tourDate},
+         tourSpot = #{tourSpot},
+         tourMemo = #{tourMemo},
+         vehicles = #{vehicles},
+         departureTime = #{departureTime},
+         arrivalTime = #{arrivalTime},
+         itineraryType = #{itineraryType}
+      where itineraryseq = #{itineraryseq}
+   </update>
+   
+   <!-- TOUR 일정 수정 -->
+   <update id="updateTour" parameterType="map">
+      update itinerary
+      set tourSpot = #{tourSpot},
+         tourMemo = #{tourMemo},
+         spotLink = #{spotLink}
+      where itinerarySeq = #{itinerarySeq}
+   </update>
+   
+   <!-- TRANSPORT- TRANIST 일정 내용만 삭제 -->
+   <update id="deleteTransit" parameterType="int">
+      update itinerary
+      set transportation=null,
+         departure=null,
+         destination=null,
+         duration=null,
+         distance=null
+      where itinerarySeq=#{itinerarySeq}
+   </update>
+   <!-- TRANSPORT- WALK, DRIVE 일정 내용만 삭제 -->
+   <update id="deleteWalkOrDrive" parameterType="int">
+      update itinerary
+      set transportation=null,
+         departure=null,
+         destination=null
+      where itinerarySeq=#{itinerarySeq}
+   </update>
+
+   <!-- TRANSPORT- TRANSIT 일정 수정  -->
+   <update id="updateTransit" parameterType="map">
+      update itinerary
+      set transportation=#{transportation},
+         departure=#{departure},
+         destination=#{destination},
+         duration=#{duration},
+         distance=#{distance}
+      where itinerarySeq=#{itinerarySeq}
+   </update>
+   <!-- TRANSPORT- WALK, DRIVE 일정 수정  -->
+   <update id="updateWalkOrDrive" parameterType="map">
+      update itinerary
+      set transportation=#{transportation},
+         departure=#{departure},
+         destination=#{destination}
+      where itinerarySeq=#{itinerarySeq}
+   </update>
+   
+   
+   <!-- BASIC :  여행 계획 삭제 -->
+   <delete id="deleteItinerary" parameterType="int">
+      delete from itinerary
+      where itinerarySeq = #{itinerarySeq}
+   </delete>
+
+   <!-- 회원, 여행 이름 일치하는 여행 전체 삭제 -->
+   <delete id="deleteMyPlan" parameterType="map">
+         delete from itinerary
+         where memberId=#{memberId} and tourName=#{tourName}
+   </delete>
+
+   <!-- BASIC : 여행 계획 하나 조회 -->
+   <select id="selectOneItinerary" parameterType="int" resultType="itinerary">
+      select *
+      from itinerary
+      where itinerarySeq = #{itinerarySeq}
+   </select>
+
+   <!-- BASIC : 여행 계획 모두 조회 -->
+   <select id="selectAllItinerary" resultType="itinerary">
+      select *
+      from itinerary
+   </select>
+   
+   <!-- 내 여행 목록 가져오기 distinct tourName -->
+   <select id="selectAllMyItinerary" parameterType="String" resultType="itinerary">
+      select distinct tourname
+      from itinerary
+      where memberId = #{memberId}
+   </select>
+   
+   <!-- 내 여행 목록 가져오기 , 해당 여행 계획 이름 -->
+   <select id="selectMyItinerary" parameterType="map" resultType="itinerary">
+      select *
+      from itinerary
+      where memberId = #{memberId} and tourName=#{tourName} and tourDate = departureDate
+      order by itineraryseq asc
+   </select>
+   
+   <!-- 내 여행 목록 가져오기, 해당 여행 계획 이름, 날짜 -->
+   <select id="selectMyItineraryinDate" parameterType="map" resultType="itinerary">
+      select *
+      from itinerary
+      where memberId = #{memberId} and tourName=#{tourName} and tourDate=#{tourDate}
+      order by itineraryseq asc
+   </select>
+   
+      <!-- 내 여행 목록 가져오기, 해당 여행 계획 이름, 날짜 -->
+   <select id="selectMyItineraryforMyInfo" parameterType="map" resultType="itinerary">
+      select *
+      from itinerary
+      where memberId = #{memberId} and tourName=#{tourName}
+      order by itineraryseq asc
+   </select>
+   
+   
+   <!-- BASIC :  여행 계획 개수 조회 -->
+   <select id="getCount">
+      select count(*)
+        from itinerary
+   </select>
+
+   <resultMap type="itinerary" id="itineraryMap">
+      <result property="itinerarySeq" column="itinerarySeq"/>
+      <result property="memberId" column="memberId"/>
+      <result property="tourName" column="tourName"/>
+      <result property="departureDate" column="departureDate"/>
+      <result property="endDate" column="endDate"/>
+      <result property="tourDate" column="tourDate"/>
+      <result property="tourSpot" column="tourSpot"/>
+      <result property="spotLink" column="spotLink"/>
+      <result property="tourMemo" column="tourMemo"/>
+      <result property="itineraryType" column="itineraryType"/>
+   </resultMap>
+
+</mapper>

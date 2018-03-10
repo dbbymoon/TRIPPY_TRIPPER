@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="dao.TripRecordDao">
+
+	<!-- TripRecord : 게시글 추가 -->
+	<insert id="insertTripRecord" parameterType="tripRecord">
+	  <selectKey order="BEFORE" keyProperty="recordSeq" resultType="int">
+         select RECORD_SEQ.NEXTVAL from dual
+      </selectKey>
+		insert
+		into triprecord (recordSeq, memberId, recordContent, 
+						recordSpot, recordDate, recordSecret)
+		values (
+				#{recordSeq}, #{memberId}, #{recordContent}, 
+				#{recordSpot}, #{recordDate}, #{recordSecret}
+				)
+	</insert>
+
+	<!-- TripRecord : 게시글 파일 추가 -->
+	<insert id="insertAttach" parameterType="map">
+		insert
+		into attachfile (fileName, fileNum)
+		values (
+				#{fileName},
+				#{fileNum}
+				)
+	</insert>
+
+	<!-- TripRecord : 게시글 수정 -->
+	<update id="updateTripRecord" parameterType="TripRecord">
+		update triprecord
+		set
+			recordContent = #{recordContent},
+			recordSpot = #{recordSpot},
+			recordDate = #{recordDate},
+			recordSecret = #{recordSecret}
+			where recordSeq = #{recordSeq}
+	</update>
+
+	<!-- TripRecord : 게시글 삭제 -->
+	<delete id="deleteTripRecord" parameterType="int">
+		delete
+		from triprecord
+		where recordSeq = #{recordSeq}
+	</delete>
+
+	<!-- TripRecord : 게시글 하나 조회 -->
+	<select id="selectOneTripRecord" parameterType="int" resultType="tripRecord">
+		select *
+		from triprecord
+		where recordSeq = #{recordSeq}
+	</select>
+
+	<!-- TripRecord : 게시글 모두 조회 -->
+	<select id="selectAllTripRecord" resultType="tripRecord">
+		select *
+		from triprecord
+		order by recordSeq desc
+	</select>
+
+	<!-- TripRecord : 게시글 개수 조회 -->
+	<select id="getCount">
+		select count(*)
+		from triprecord
+	</select>	
+	
+	<!-- TripRecord : 내가 작성한 글 모두 조회 -->
+	<select id="selectAllByMemberId" parameterType="String" resultType="tripRecord">
+		select *
+		from triprecord
+		where memberId = #{memberId}
+		order by recordSeq desc
+	</select>
+	
+	<!-- 내가 가진 id로 Seq 조회하기 -->
+	<select id="selectAllRecordSeq" parameterType="String" resultType="int">
+		select recordSeq
+		from triprecord
+		where memberId = #{memberId}
+		order by recordSeq desc
+	</select>
+	
+	 <!-- 내가 가진 id로 secret이 'public'인 게시글의 Seq 조회하기 -->
+   <select id="selectAllRecordSeqByPublic" parameterType="String" resultType="int">
+      select recordSeq
+      from triprecord
+      where memberId = #{memberId} and recordSecret='public'
+      order by recordSeq desc
+   </select>
+
+</mapper>

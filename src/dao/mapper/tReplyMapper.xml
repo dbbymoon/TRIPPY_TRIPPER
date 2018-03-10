@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.TReplyDao">
+	<!-- insert, update, delete, selectAll, selectOne, getCount -->
+
+	<!-- 댓글 추가 (대댓글X)-->
+	<insert id="insertReply" parameterType="treply">
+		insert
+		  into treply
+		 values (treply_seq.nextval, replynum.nextval, #{depth},#{recordSeq}, #{memberId}, sysdate, #{replyContent}, #{memberProfile})
+	</insert>
+	
+	<!-- 대댓글 추가 -->
+	<insert id="insertReplyOfReply" parameterType="treply">
+		insert
+		  into treply
+		 values (treply_seq.nextval, #{replyNum}, #{depth}, #{recordSeq}, #{memberId}, sysdate, #{replyContent}, #{memberProfile})
+	</insert>
+	
+	<!-- 특정 게시글의 댓글의 대댓글 개수 조회 -->
+	<select id="getReplyCount" parameterType="int" resultType="int">
+		select count(*)
+		  from treply
+		 where replynum=#{replyNum} 
+	</select>
+	
+	<!-- 댓글 수정 -->
+	<update id="updateReply" parameterType="treply">
+		update treply
+		   set replyContent = #{replyContent}
+		 where tReplySeq = #{tReplySeq}
+	</update>
+	
+	<!-- 대댓글이 달린 댓글을 삭제하려고 할 때 삭제하지 않고 content와 memberId를 변경 -->
+	<update id="updateReplyoWithRepOfRep" parameterType="treply">
+		update treply
+		   set replyContent = #{replyContent}, memberId=#{memberId}
+		 where tReplySeq = #{tReplySeq}
+	</update>
+	
+	<!-- 댓글 삭제 -->
+	<delete id="deleteReply" parameterType="int">
+		delete
+		  from treply
+		 where tReplySeq = #{tReplySeq}
+	</delete>
+	
+	<!-- 여행글이 삭제됬을 떄 댓글도 삭제 -->
+	<delete id="deleteReplyByRecordSeq" parameterType="int">
+		delete
+		  from treply
+		 where recordSeq = #{recordSeq}
+	</delete>
+	
+	<!-- 같은 replyNum을 가진 모든 댓글 삭제 -->
+	<delete id="deleteAllReplyforReplyNum" parameterType="int">
+		delete
+		  from treply
+		 where replyNum = #{replyNum}
+	</delete>
+	
+	<!-- 특정 게시글의 댓글 조회 -->
+	<select id="selectOneReply" parameterType="int" resultType="treply">
+		select * 
+		  from treply 
+		 where tReplySeq =#{tReplySeq}
+	</select>
+		
+	<!-- 특정 게시물의 모든 댓글 조회 -->
+	<select id="selectAllReply" parameterType="int" resultType="treply">
+		select *
+		  from treply
+		 where recordSeq=#{recordSeq}
+		order by replyNum, depth
+	</select>
+	
+	<!-- myPage에서 프로필 사진이 수정될 때 companion 게시판의 프로필 사진도 수정되어야함 -->
+	<update id="updateReplyForProfile" parameterType="treply">
+   	  update treply
+   	     set memberProfile = #{memberProfile}
+       where memberId = #{memberId}
+   </update>
+	
+</mapper>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+	<context:component-scan base-package="controller"></context:component-scan>
+	
+	<mvc:annotation-driven></mvc:annotation-driven>
+	
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/jsp/"></property>
+		<property name="suffix" value=".jsp"></property>
+	</bean>
+
+	<!-- interceptor 등록 -->
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<!-- 모든 interceptor에 대해 요청을 가로채겠다 -->
+			<mvc:mapping path="/tMember/*" />
+			<mvc:mapping path="/main" />
+			<mvc:mapping path="/companion/*" />
+			<mvc:mapping path="/companion" />
+			<mvc:mapping path="/matching/*" />
+			<mvc:mapping path="/matching" />
+			<mvc:mapping path="/scrap/*" />
+			<mvc:mapping path="/scrap" />
+			<mvc:mapping path="/tReply/*" />
+			<mvc:mapping path="/tReply" />
+			<mvc:mapping path="/tripRecord/*" />
+			<mvc:mapping path="/tripRecord" />
+			<mvc:mapping path="/itinerary/*" />
+			<mvc:mapping path="/itinerary" />
+			
+			<ref bean="loginCheckInterceptor" />
+		</mvc:interceptor>
+		<mvc:interceptor>
+			<mvc:mapping path="/log/*" />
+			<ref bean="loginAfterCheckInterceptor" />
+		</mvc:interceptor>
+	</mvc:interceptors>
+	
+<!-- 특정 요청 처리를 하는 appServlet에 작성 -->
+   <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+      <property name="defaultEncoding" value="UTF-8"/>
+   </bean>
+</beans>
